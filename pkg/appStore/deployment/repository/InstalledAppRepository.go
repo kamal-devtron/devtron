@@ -150,6 +150,7 @@ type InstalledAppsWithChartDetails struct {
 	AppOfferingMode              string    `json:"app_offering_mode"`
 	AppStatus                    string    `json:"app_status"`
 	DeploymentAppDeleteRequest   bool      `json:"deploymentAppDeleteRequest"`
+	Version			     string    `json:"version"`
 }
 
 type InstalledAppAndEnvDetails struct {
@@ -378,7 +379,7 @@ func (impl InstalledAppRepositoryImpl) GetAllInstalledApps(filter *appStoreBean.
 	query = "select iav.updated_on, iav.id as installed_app_version_id, ch.name as chart_repo_name, das.id as docker_artifact_store_id,"
 	query = query + " env.environment_name, env.id as environment_id, a.app_name, a.app_offering_mode, asav.icon, asav.name as app_store_application_name,"
 	query = query + " env.namespace, cluster.cluster_name, a.team_id, cluster.id as cluster_id, "
-	query = query + " asav.id as app_store_application_version_id, ia.id , asav.deprecated , app_status.status as app_status, ia.deployment_app_delete_request"
+	query = query + " asav.id as app_store_application_version_id, ia.id , asav.deprecated , app_status.status as app_status, ia.deployment_app_delete_request,asav.version"
 	query = query + " from installed_app_versions iav"
 	query = query + " inner join installed_apps ia on iav.installed_app_id = ia.id"
 	query = query + " inner join app a on a.id = ia.app_id"
