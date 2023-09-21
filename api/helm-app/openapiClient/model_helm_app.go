@@ -33,6 +33,7 @@ type HelmApp struct {
 	ChartVersion      *string               `json:"chartVersion,omitempty"`
 	EnvironmentDetail *AppEnvironmentDetail `json:"environmentDetail,omitempty"`
 	AppStatus         *string               `json:"appStatus,omitempty"`
+	Version		  *string               `json:"version,omitempty"`
 }
 
 // NewHelmApp instantiates a new HelmApp object
