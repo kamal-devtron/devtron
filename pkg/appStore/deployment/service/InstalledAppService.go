@@ -245,7 +245,7 @@ func (impl InstalledAppServiceImpl) GetAll(filter *appStoreBean.AppStoreFilter) 
 			ChartAvatar:       &appLocal.Icon,
 			LastDeployedAt:    &appLocal.UpdatedOn,
 			AppStatus:         &appLocal.AppStatus,
-			Version:	   &appLocal.Version
+			Version:	   &appLocal.Version,
 		}
 		helmAppsResponse = append(helmAppsResponse, helmAppResp)
 	}
