@@ -18,6 +18,9 @@
 package repository
 
 import (
+	"strconv"
+	"time"
+
 	"github.com/argoproj/gitops-engine/pkg/health"
 	"github.com/devtron-labs/devtron/internal/sql/repository/app"
 	"github.com/devtron-labs/devtron/internal/sql/repository/pipelineConfig"
@@ -30,8 +33,6 @@ import (
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
 	"go.uber.org/zap"
-	"strconv"
-	"time"
 )
 
 type InstalledAppRepository interface {
@@ -150,7 +151,7 @@ type InstalledAppsWithChartDetails struct {
 	AppOfferingMode              string    `json:"app_offering_mode"`
 	AppStatus                    string    `json:"app_status"`
 	DeploymentAppDeleteRequest   bool      `json:"deploymentAppDeleteRequest"`
-	Version			     string    `json:"version"`
+	Version                      string    `json:"version"`
 }
 
 type InstalledAppAndEnvDetails struct {

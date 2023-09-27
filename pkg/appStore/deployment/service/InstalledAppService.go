@@ -20,6 +20,11 @@ package service
 import (
 	"bytes"
 	"context"
+	"net/http"
+	"regexp"
+	"sync"
+	"sync/atomic"
+
 	"github.com/argoproj/argo-cd/v2/pkg/apiclient/application"
 	client "github.com/devtron-labs/devtron/api/helm-app"
 	openapi "github.com/devtron-labs/devtron/api/helm-app/openapiClient"
@@ -49,10 +54,6 @@ import (
 	"github.com/devtron-labs/devtron/util/argo"
 	util4 "github.com/devtron-labs/devtron/util/k8s"
 	"github.com/tidwall/gjson"
-	"net/http"
-	"regexp"
-	"sync"
-	"sync/atomic"
 
 	/* #nosec */
 	"crypto/sha1"
@@ -213,6 +214,7 @@ func (impl InstalledAppServiceImpl) GetAll(filter *appStoreBean.AppStoreFilter) 
 	}
 	start := time.Now()
 	installedApps, err := impl.installedAppRepository.GetAllInstalledApps(filter)
+	impl.logger.Debugw("values", installedApps)
 	middleware.AppListingDuration.WithLabelValues("getAllInstalledApps", "helm").Observe(time.Since(start).Seconds())
 	if err != nil && !util.IsErrNoRows(err) {
 		impl.logger.Error(err)
@@ -245,7 +247,7 @@ func (impl InstalledAppServiceImpl) GetAll(filter *appStoreBean.AppStoreFilter) 
 			ChartAvatar:       &appLocal.Icon,
 			LastDeployedAt:    &appLocal.UpdatedOn,
 			AppStatus:         &appLocal.AppStatus,
-			Version:	   &appLocal.Version,
+			Version:           &appLocal.Version,
 		}
 		helmAppsResponse = append(helmAppsResponse, helmAppResp)
 	}
