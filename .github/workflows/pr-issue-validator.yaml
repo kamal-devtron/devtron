@@ -130,7 +130,7 @@ jobs:
       shell: bash
       env: 
           pr_no: ${{ github.event.pull_request.number }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
       run: |
           echo "GitHub Token: $GH_TOKEN"
           git fetch origin main
@@ -166,7 +166,7 @@ jobs:
             migration_no=$(echo $filename | cut -d "/" -f 3 | cut -d "_" -f 1)
             echo "Migration Number: $migration_no"
             
-            migration_files_of_this_no=$(ls | grep -i $migration_no | wc -l)
+            migration_files_of_this_no=$(ls | cut -d "_" -f 1 | grep  -w -c  $migration_no )
             cd ../../
             echo "Current directory: $(pwd)"
             
